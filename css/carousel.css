@@ -1,0 +1,25 @@
+#slider {
+	white-space: nowrap;
+	overflow: hidden;
+}
+#scroll {
+	position: relative;
+	-webkit-transition: transform 1s;
+    -moz-transition: transform 1s;
+    -ms-transition: transform 1s;
+    -o-transition: transform 1s;
+    transition: transform 1s;
+}
+.item {
+	display: inline-block;
+}
+.inner {
+	width: -moz-fit-content; 
+	width: -webkit-fit-content;
+	width: fit-content;
+    text-align: center;
+	margin: auto;
+}
+.img-responsive {
+	max-width: 100%;
+}
