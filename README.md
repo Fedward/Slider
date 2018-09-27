@@ -1,2 +1,1 @@
-# slider
-my 1st slider
+This is my first slider on javascript!
