@@ -4,13 +4,12 @@
 #carousel-wrapper {
 	position: relative;
 	display: flex;
-	-webkit-transition: transform 1s;
-    -moz-transition: transform 1s;
-    -ms-transition: transform 1s;
-    -o-transition: transform 1s;
-    transition: transform 1s;
+    transition: transform .3s;
 }
 .item {
+	display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .inner img {
 	max-width: 100%;

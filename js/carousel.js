@@ -1,26 +1,29 @@
 document.addEventListener("DOMContentLoaded", function() {
 	'use strict';
 	let carousel = {
+		carouselBlock: document.getElementById("carousel"),
+		wrapper: document.getElementById("carousel-wrapper"),		
 		visibleItems: 3, // кол-во элементов слайдера на экране, задает пользователь
 		totalItems: document.getElementsByClassName("item"),
-		wrapper: document.getElementById("carousel-wrapper"),
 		next: document.getElementById("carousel-next"),
 		prev: document.getElementById("carousel-prev"),	
 		stepLength: 0,
 		currentStep: 0,
-		setWrapperWidth: function () {
-			this.wrapper.style.width = `${this.wrapper.clientWidth / this.visibleItems * this.totalItems.length}px`;
-		},
-		calcStepLength: function () {
-			this.stepLength = this.wrapper.clientWidth / this.visibleItems;
+		calcAllParameters: function () {
+			let itemWidth = 1 / this.visibleItems * 100;
+			for (let i = 0; i < this.totalItems.length; i++) {
+				this.totalItems[i].style.width = itemWidth + "%";
+			};
+			this.wrapper.style.width = `${this.carouselBlock.clientWidth / this.visibleItems * this.totalItems.length}px`;
+			this.stepLength = this.wrapper.clientWidth / this.totalItems.length;
 		},
 		makeStep: function () {
 			this.wrapper.style.transform = `translate(-${ this.stepLength * this.currentStep }px, 0)`;
-		}
+		},
+
 	}
-	
-	carousel.setWrapperWidth();
-	carousel.calcStepLength();
+
+	carousel.calcAllParameters();
 
 	carousel.next.addEventListener('click', () => {
 		if (carousel.currentStep >= (carousel.totalItems.length - carousel.visibleItems)) {			
@@ -42,8 +45,8 @@ document.addEventListener("DOMContentLoaded", function() {
 		}				
 	});
 
-	window.onresize = () => {
-		carousel.calcStepLength();
+	window.addEventListener('resize', () => {
+		carousel.calcAllParameters();
 		carousel.makeStep();
-	}
+	});
 });
