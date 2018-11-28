@@ -1,55 +1,42 @@
-const carousel = {
-	visibleItems: 3, // кол-во элементов слайдера на экране, задает пользователь
-	totalItems: [],
-	setItemWidth: function () {
-		for (let i = 0; i < this.totalItems.length; i++) {
-			this.totalItems[i].setAttribute("style", "width: " + itemWidth + "%");
-		};		
+document.addEventListener("DOMContentLoaded", function() {
+	'use strict';
+	const carousel = {
+		visibleItems: 3, // кол-во элементов слайдера на экране, задает пользователь
+		totalItems: document.getElementsByClassName("item"),
+		wrapper: document.getElementById("carousel-wrapper"),
+		next: document.getElementById("carousel-next"),
+		prev: document.getElementById("carousel-prev"),	
+		stepLength: document.getElementById("carousel-wrapper").clientWidth / this.visibleItems,
+		currentStep: 0		
 	}
-}
 
-let next, 
-	prev, 
-	scroll, 
-	stepLength, 
-	itemWidth = Math.round(1 / carousel.visibleItems * 100),
-	currentStep = 0;
-
-window.onload = function() {
-	next = document.getElementById("next");
-	prev = document.getElementById("prev");
-	scroll = document.getElementById("scroll");
-	carousel.totalItems = document.getElementsByClassName("item");
-	carousel.setItemWidth();
-	stepLength = scroll.clientWidth / carousel.visibleItems;
-
-	next.onclick = function () {
-		if (currentStep >= (carousel.totalItems.length - carousel.visibleItems)) {			
-			currentStep = 0;
+	carousel.next.onclick = function () {
+		if (carousel.currentStep >= (carousel.totalItems.length - carousel.visibleItems)) {			
+			carousel.currentStep = 0;
 			makeStep();			
 		} else {
-			currentStep++;
+			carousel.currentStep++;
 			makeStep();
 		}
 	}
 
-	prev.onclick = function () {
-		if (currentStep == 0) {
-			currentStep = carousel.totalItems.length - carousel.visibleItems;
+	carousel.prev.onclick = function () {
+		if (carousel.currentStep == 0) {
+			carousel.currentStep = carousel.totalItems.length - carousel.visibleItems;
 			makeStep();
 		} else {
-			currentStep--;
+			carousel.currentStep--;
 			makeStep();
 		}				
 	}
-}
 
-window.onresize = function () {
-	stepLength = scroll.clientWidth / carousel.visibleItems;
-	makeStep();
-}
+	window.onresize = function () {
+		carousel.stepLength = carousel.wrapper.clientWidth / carousel.visibleItems;
+		makeStep();
+	}
 
-function makeStep () {
-	// по идее здесь можно добавить префиксы для transform	
-	scroll.setAttribute("style", "transform: translate(-" + stepLength * currentStep + "px, 0);");
-}
+	function makeStep () {
+		// по идее здесь можно добавить префиксы для transform	
+		carousel.wrapper.style.transform = "translate(-" + carousel.stepLength * carousel.currentStep + "px, 0)";		
+	}
+});

@@ -1,9 +1,9 @@
 #carousel {
-	white-space: nowrap;
 	overflow: hidden;
 }
-#scroll {
+#carousel-wrapper {
 	position: relative;
+	display: flex;
 	-webkit-transition: transform 1s;
     -moz-transition: transform 1s;
     -ms-transition: transform 1s;
@@ -11,15 +11,7 @@
     transition: transform 1s;
 }
 .item {
-	display: inline-block;
 }
-.inner {
-	width: -moz-fit-content; 
-	width: -webkit-fit-content;
-	width: fit-content;
-    text-align: center;
-	margin: auto;
-}
-.img-responsive {
+.inner img {
 	max-width: 100%;
 }
