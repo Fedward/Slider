@@ -1,42 +1,45 @@
 document.addEventListener("DOMContentLoaded", function() {
 	'use strict';
-	const carousel = {
+	let carousel = {
 		visibleItems: 3, // кол-во элементов слайдера на экране, задает пользователь
 		totalItems: document.getElementsByClassName("item"),
 		wrapper: document.getElementById("carousel-wrapper"),
 		next: document.getElementById("carousel-next"),
 		prev: document.getElementById("carousel-prev"),	
-		stepLength: document.getElementById("carousel-wrapper").clientWidth / this.visibleItems,
-		currentStep: 0		
-	}
-
-	carousel.next.onclick = function () {
-		if (carousel.currentStep >= (carousel.totalItems.length - carousel.visibleItems)) {			
-			carousel.currentStep = 0;
-			makeStep();			
-		} else {
-			carousel.currentStep++;
-			makeStep();
+		stepLength: 0,
+		currentStep: 0,
+		calcStepLength: function () {
+			this.stepLength = this.wrapper.clientWidth / this.visibleItems;
+		},
+		makeStep: function () {
+			this.wrapper.style.transform = `translate(-${ this.stepLength * this.currentStep }px, 0)`;
 		}
 	}
 
-	carousel.prev.onclick = function () {
+	carousel.calcStepLength();
+
+	carousel.next.addEventListener('click', () => {
+		if (carousel.currentStep >= (carousel.totalItems.length - carousel.visibleItems)) {			
+			carousel.currentStep = 0;
+			carousel.makeStep();			
+		} else {
+			carousel.currentStep++;
+			carousel.makeStep();
+		}
+	});
+
+	carousel.prev.addEventListener('click', () => {
 		if (carousel.currentStep == 0) {
 			carousel.currentStep = carousel.totalItems.length - carousel.visibleItems;
-			makeStep();
+			carousel.makeStep();
 		} else {
 			carousel.currentStep--;
-			makeStep();
+			carousel.makeStep();
 		}				
-	}
+	});
 
-	window.onresize = function () {
-		carousel.stepLength = carousel.wrapper.clientWidth / carousel.visibleItems;
-		makeStep();
-	}
-
-	function makeStep () {
-		// по идее здесь можно добавить префиксы для transform	
-		carousel.wrapper.style.transform = "translate(-" + carousel.stepLength * carousel.currentStep + "px, 0)";		
+	window.onresize = () => {
+		carousel.calcStepLength();
+		carousel.makeStep();
 	}
 });
