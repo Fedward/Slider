@@ -8,6 +8,9 @@ document.addEventListener("DOMContentLoaded", function() {
 		prev: document.getElementById("carousel-prev"),	
 		stepLength: 0,
 		currentStep: 0,
+		setWrapperWidth: function () {
+			this.wrapper.style.width = `${this.wrapper.clientWidth / this.visibleItems * this.totalItems.length}px`;
+		},
 		calcStepLength: function () {
 			this.stepLength = this.wrapper.clientWidth / this.visibleItems;
 		},
@@ -15,7 +18,8 @@ document.addEventListener("DOMContentLoaded", function() {
 			this.wrapper.style.transform = `translate(-${ this.stepLength * this.currentStep }px, 0)`;
 		}
 	}
-
+	
+	carousel.setWrapperWidth();
 	carousel.calcStepLength();
 
 	carousel.next.addEventListener('click', () => {
