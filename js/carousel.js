@@ -1,4 +1,10 @@
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener('DOMContentLoaded', function() {
+	'use strict';
+	let carouselInit = document.getElementById("carousel-init");
+		carouselInit.addEventListener("click", initCarousel);
+});
+
+function initCarousel() {
 	'use strict';
 	let carousel = {
 		carouselBlock: document.getElementById("carousel"),
@@ -49,4 +55,4 @@ document.addEventListener("DOMContentLoaded", function() {
 		carousel.calcAllParameters();
 		carousel.makeStep();
 	});
-});
+}
